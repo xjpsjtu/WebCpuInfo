@@ -33,11 +33,7 @@ public class GetInfo extends HttpServlet {
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		RuntimeTest run = new RuntimeTest();
-		CpuCpu[] cpu = run.getCpu();
-		for(int i = 0; i < cpu.length; i++){
-		    out.println("The ratio of CPU  " + (i+1) + "  is  "+ cpu[i].getCombineratio() + "<br>");
-		}
+		out.println("Now the Cpu Ratio is: " + CpuInfo.GetCpuRatio() + "<br>");
 	}
 
 	/**

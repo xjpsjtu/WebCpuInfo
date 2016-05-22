@@ -1,0 +1,38 @@
+package xjp.cpuInfo;
+
+import java.text.DecimalFormat;
+
+import org.hyperic.sigar.Cpu;
+import org.hyperic.sigar.CpuPerc;
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
+
+public class CpuInfo {
+	private static Sigar sigar;
+	public static String GetCpuRatio(){
+		sigar = new Sigar();
+		try{
+			Cpu cpu = sigar.getCpu();
+			   
+			CpuPerc perc = sigar.getCpuPerc();
+			DecimalFormat df   = new DecimalFormat("######0.00");
+			return df.format(perc.getCombined() * 100) + "%";
+		}catch(SigarException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static void setCpuRatio(int k){
+		CpuThread[] th = new CpuThread[10];
+		for(int i = 0; i < k; i++){
+			th[i] = new CpuThread();
+			th[i].start();
+		}
+	}
+	public static void main(String[] args){
+		CpuInfo.setCpuRatio(7);
+		DetectCpu de = new DetectCpu();
+		de.start();
+	}
+}
