@@ -31,9 +31,16 @@ public class GetInfo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		out.println("Now the Cpu Ratio is: " + CpuInfo.GetCpuRatio() + "<br>");
+		response.setContentType("text/html");
+		String k = request.getParameter("rate");
+		if(k == null){
+			out.println("Now the Cpu Ratio is: " + CpuInfo.GetCpuRatio() + "<br>");
+		}else{
+			int rate = Integer.valueOf(k);
+			CpuInfo.setCpuRatio(rate);
+			out.println("Successfully change the CPU ratio, now the CPU ratio is: " + CpuInfo.GetCpuRatio() + "<br>");
+		}
 	}
 
 	/**
