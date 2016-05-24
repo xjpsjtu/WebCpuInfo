@@ -7,7 +7,7 @@
   <to>/GetInfo</to>
  </rule>
  <rule>
- 	<from>/cpu_rate=(/d+)$</from>
+ 	<from>/cpu_rate=(\d+)$</from>
  	<to>/GetInfo?rate=$1</to>
  </rule>
 </urlrewrite>
