@@ -54,7 +54,7 @@ public class CpuInformation {
 	}
 	public static void main(String[] args){
 		CpuInformation cpuInfo = new CpuInformation();
-		cpuInfo.setCpuRatio(4);
+		cpuInfo.setCpuRatio(1);
 		DetectCpu de = new DetectCpu();
 		de.start();
 //		System.out.println(System.getProperty("java.library.path"));
