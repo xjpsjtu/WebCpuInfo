@@ -40,6 +40,7 @@ public class GetInfo extends HttpServlet {
 		if(k == null){
 			out.println("Now the Cpu Ratio is: " + cpuInfo.GetCpuRatio() + "<br>");
 			org.hyperic.sigar.CpuInfo[] infos = cpuInfo.getCpuInfo();
+			out.println("<br>");
 			out.println("There are " + cpuInfo.getCpuNum() + " CPU(s)" + "<br>");
 			for(int i = 0; i < infos.length; i++){
 				out.println("<br>");
@@ -53,8 +54,12 @@ public class GetInfo extends HttpServlet {
 			
 		}else{
 			int rate = Integer.valueOf(k);
-			cpuInfo.setCpuRatio(rate);
-			out.println("Successfully change the CPU ratio, now the CPU ratio is: " + cpuInfo.GetCpuRatio() + "<br>");
+			int msg = cpuInfo.setCpuRatio(rate);
+			if(msg == 1){
+				out.println("Successfully change the CPU ratio, now the CPU ratio is: " + cpuInfo.GetCpuRatio() + "<br>");
+			}else{
+				out.println("Fail, now the cpu ratio has exceed the ratio " + rate * 10 + "%");
+			}
 		}
 	}
 

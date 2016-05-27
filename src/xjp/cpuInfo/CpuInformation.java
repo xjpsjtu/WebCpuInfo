@@ -18,20 +18,36 @@ public class CpuInformation {
 			Cpu cpu = sigar.getCpu();
 			   
 			perc = sigar.getCpuPerc();
+			
+			
+			double sum = 0;
+			for(int i = 0; i < 1000; i++){
+				sum += perc.getCombined();
+			}
+			double avg = sum/1000;
 			DecimalFormat df   = new DecimalFormat("######0.00");
-			return df.format(perc.getCombined() * 100) + "%";
+			return df.format(avg * 100) + "%";
 		}catch(SigarException e){
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	public void setCpuRatio(int k){
-		CpuThread[] th = new CpuThread[10];
-		for(int i = 0; i < k; i++){
-			th[i] = new CpuThread();
-			th[i].start();
+	public int setCpuRatio(int k){
+		CpuInformation c = new CpuInformation();
+		String ratio = c.GetCpuRatio();
+		int nowRatio = (int)Double.parseDouble(ratio.substring(0, ratio.indexOf("%")));
+		if(nowRatio >= k*10){
+			return 0;
+		}else{
+			int setRaio = k * 10 - nowRatio;
+			int num = setRaio / 10;
+			CpuThread[] th = new CpuThread[10];
+			for(int i = 0; i < num; i++){
+				th[i] = new CpuThread();
+				th[i].start();
+			}
 		}
+		return 1;
 	}
 	public int getCpuNum(){
 		try {

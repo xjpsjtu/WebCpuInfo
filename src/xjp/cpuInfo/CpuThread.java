@@ -6,11 +6,12 @@ public class CpuThread extends Thread{
 	long nowtime = 0;
 	long starttime = 0;
 	public void run(){
-		while(true){
+		long origintime = System.currentTimeMillis();
+		while(nowtime - origintime <= 500){
 			nowtime = System.currentTimeMillis();
-			if(nowtime - starttime > 1){
+			if(nowtime - starttime > 20){
 				try {
-					sleep(1);
+					sleep(15);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
