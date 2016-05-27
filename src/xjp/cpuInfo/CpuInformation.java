@@ -21,10 +21,10 @@ public class CpuInformation {
 			
 			
 			double sum = 0;
-			for(int i = 0; i < 1000; i++){
+			for(int i = 0; i < 10000; i++){
 				sum += perc.getCombined();
 			}
-			double avg = sum/1000;
+			double avg = sum/10000;
 			DecimalFormat df   = new DecimalFormat("######0.00");
 			return df.format(avg * 100) + "%";
 		}catch(SigarException e){
@@ -32,22 +32,30 @@ public class CpuInformation {
 			return null;
 		}
 	}
-	public int setCpuRatio(int k){
-		CpuInformation c = new CpuInformation();
-		String ratio = c.GetCpuRatio();
-		int nowRatio = (int)Double.parseDouble(ratio.substring(0, ratio.indexOf("%")));
-		if(nowRatio >= k*10){
-			return 0;
-		}else{
-			int setRaio = k * 10 - nowRatio;
-			int num = setRaio / 10;
-			CpuThread[] th = new CpuThread[10];
-			for(int i = 0; i < num; i++){
-				th[i] = new CpuThread();
-				th[i].start();
-			}
+//	public int setCpuRatio(int k){
+//		CpuInformation c = new CpuInformation();
+//		String ratio = c.GetCpuRatio();
+//		int nowRatio = (int)Double.parseDouble(ratio.substring(0, ratio.indexOf("%")));
+//		if(nowRatio >= k*10){
+//			return 0;
+//		}else{
+//			int setRaio = k * 10 - nowRatio;
+//			int num = setRaio / 10;
+//			CpuThread[] th = new CpuThread[10];
+//			for(int i = 0; i < num; i++){
+//				th[i] = new CpuThread();
+//				th[i].start();
+//			}
+//		}
+//		return 1;
+//	}
+	public void setCpuRatio(int rate){
+		int num = rate / 10;
+		SetCpuThread[] st = new SetCpuThread[10];
+		for(int i = 0; i < num; i++){
+			st[i] = new SetCpuThread();
+			st[i].start();
 		}
-		return 1;
 	}
 	public int getCpuNum(){
 		try {
@@ -70,7 +78,7 @@ public class CpuInformation {
 	}
 	public static void main(String[] args){
 		CpuInformation cpuInfo = new CpuInformation();
-		cpuInfo.setCpuRatio(1);
+		cpuInfo.setCpuRatio(30);
 		DetectCpu de = new DetectCpu();
 		de.start();
 //		System.out.println(System.getProperty("java.library.path"));

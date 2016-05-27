@@ -3,6 +3,7 @@ package xjp.Servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,30 +37,14 @@ public class GetInfo extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html");
 		String k = request.getParameter("rate");
-		CpuInformation cpuInfo = new CpuInformation();
 		if(k == null){
-			out.println("Now the Cpu Ratio is: " + cpuInfo.GetCpuRatio() + "<br>");
-			org.hyperic.sigar.CpuInfo[] infos = cpuInfo.getCpuInfo();
-			out.println("<br>");
-			out.println("There are " + cpuInfo.getCpuNum() + " CPU(s)" + "<br>");
-			for(int i = 0; i < infos.length; i++){
-				out.println("<br>");
-				org.hyperic.sigar.CpuInfo info = infos[i];
-				out.println("------------ CPU " + (i+1) + "-------------" + "<br>");
-				out.println("Mhz: " + info.getMhz() + "<br>");
-				out.println("Vendor: " + info.getVendor() + "<br>");
-				out.println("Model: " + info.getModel() + "<br>");
-				out.println("Cache size: " + info.getCacheSize() + "<br>");
-			}
-			
+			RequestDispatcher view = request.getRequestDispatcher("cpuinfo.jsp");
+			view.forward(request, response);	
 		}else{
 			int rate = Integer.valueOf(k);
-			int msg = cpuInfo.setCpuRatio(rate);
-			if(msg == 1){
-				out.println("Successfully change the CPU ratio, now the CPU ratio is: " + cpuInfo.GetCpuRatio() + "<br>");
-			}else{
-				out.println("Fail, now the cpu ratio has exceed the ratio " + rate * 10 + "%");
-			}
+			request.setAttribute("rate", rate);
+			RequestDispatcher view = request.getRequestDispatcher("cpurate.jsp");
+			view.forward(request, response);
 		}
 	}
 

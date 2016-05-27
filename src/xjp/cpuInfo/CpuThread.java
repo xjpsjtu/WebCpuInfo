@@ -11,7 +11,7 @@ public class CpuThread extends Thread{
 			nowtime = System.currentTimeMillis();
 			if(nowtime - starttime > 20){
 				try {
-					sleep(15);
+					sleep(17);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
